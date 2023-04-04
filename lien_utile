@@ -1,0 +1,5 @@
+https://medium.com/@nutanbhogendrasharma/create-flask-web-application-and-host-in-apache-in-vultr-cloud-server-4f7eb0a2f381
+
+#activé l'environnement virtuel 
+
+source flask-prj1-venv/bin/activate
