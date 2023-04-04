@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CellDetector</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"> <!-- opening and slides motion of the window -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> <!-- opening and slides motion of the window -->
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+
+    <!------------- BODY --------------->
+<body>
+    <div id="loading">
+        <div id="spinner"></div>
+    </div>
+    <div id="particles-js"></div>
+    <div id="box">
+        <div class="box1 onlywide animated bounceOutLeft" style="animation-delay:1.7s;"></div>
+        <div class="box2 onlywide animated bounceOutLeft" style="animation-delay:1.8s;"></div>
+        <div class="box2 onlywide animated bounceOutLeft" style="animation-delay:1.9s;"></div>
+        <div class="box2 animated bounceOutRight" style="animation-delay:1.9s;"></div>
+        <div class="box2 onlywide animated bounceOutRight" style="animation-delay:1.8s;"></div>
+        <div class="box2 onlywide animated bounceOutRight" style="animation-delay:1.7s;"></div>
+    </div>
+    
+    <a id="detection" onclick="showdetection()" class="animated fadeIn" style="animation-delay:2.2s;">detection</a>
+    <a id="more" onclick="showmore()" class="animated fadeIn" style="animation-delay:2.2s;">more</a>
+    <a id="contact" onclick="showcontact()" class="animated fadeIn" style="animation-delay:2.2s;">information</a>
+    
+    <div id="middle" class="animated slideInDown" style="animation-delay:2.0s;">
+        <!-- <h1>CellDetector </h1> -->
+        <img id="logo" src="/static/img/logo.svg" alt="CellDetector">
+
+
+        <h2>Detector of cancerous cells </h2>
+        <p> This website application was created for medical purpose : none of your data will be stored or collected</p>
+        <p> Made by DESRENTES Alicia, Farah DOUROUNI, Nelty LAY</p>
+        <div id="menu">
+            <a onclick="showdetection()">detection</a>
+            <a onclick="showmore()">more</a>
+            <a onclick="showcontact()">aboutus</a>
+        </div>
+        
+    </div>
+
+    <!------------- MORE --------------->
+    <div id="more_container" class="container">
+        <div onclick="closemore()"><i class="fa-angle-right"></i> X </div>
+        <h1>more.</h1>
+        <section>
+            <h2>More about histhopathological detection</h2>
+            <p>
+                <h3> Our detection code was collected on the Kaggle : <a href="https://www.kaggle.com/c/histopathologic-cancer-detection/">Histopathologic Cancer Detection</a> challenge</h3>
+                <h3> The model was trained and then deployed on App Services - Microsoft Azure</h3>
+            </p>
+            <p> 
+                What is known about the domain? </br>
+                The histopathological images are glass slide microscope images of lymph nodes that are stained with hematoxylin and eosin (H&E). This staining method is one of the most widely used in medical diagnosis and it produces blue, violet and red colors.</br></br>
+                Lymph nodes are small glands that filter the fluid in the lymphatic system and they are the first place a breast cancer is likely to spread. Histological assessment of lymph node metastases is part of determining the stage of breast cancer in TNM classification which is a globally recognized standard for classifying the extent of spread of cancer. The diagnostic procedure for pathologists is tedious and time-consuming as a large area of tissue has to be examined and small metastases can be easily missed.</br></br>
+                </br>
+                Here are some useful links : </br>
+
+                <ul>
+                <li> <a href="https://pubmed.ncbi.nlm.nih.gov/21356829/"> Hematoxylin and eosin staining of tissue and cell sections </a> </li>                
+                <li> <a href="https://academic.oup.com/gigascience/article/7/6/giy065/5026175">H&E-stained sentinel lymph node sections of breast cancer patients: the CAMELYON dataset</a> </li>
+                <li> <a href="https://www.uicc.org/what-we-do/sharing-knowledge/tnm"> TNM classification </a> </li>
+                </ul>
+            </p>
+            <p>
+                The diagnostic procedure for pathologists is tedious and time consuming as a large area of ​​tissue needs to be examined and small metastases can easily be missed, thus our project is relevant as it will facilitate this analysis and reduce analysis time and mistakes made.
+                </br></br>
+                Please also find the link to our <a href="https://github.com/Alicia-cmd/CellDetectorFAN/blob/main/templates/index.html">GitHub</a> to understand more about our work.
+            </p>
+
+            <!-- <div id="used">
+                <div><i class="fas fa-circle"></i>&nbsp;This</div>
+                <div><i class="fas fa-circle"></i>&nbsp;is a</div>
+                <div><i class="fas fa-circle"></i>&nbsp;test</div>
+            </div> -->
+
+        </section>
+    </div>
+
+    <!------------- DETECTION --------------->
+    <div id="detection_container" class="container">
+            <div onclick="closedetection()"><i class="fas fa-angle-left"></i> X </div>
+            <h1>detection.</h1>
+            <section>
+                <h2>Detection principle</h2>
+                <p>
+                    Thanks to our algorithm, we are able to identify the presence of cancerous cells in your picture(s). The algorithm won't be able to locate the exact position of the cancerous cells, however, it will be possible to determine its presence. 
+                </p>
+                <p>
+                    Please upload your image(s) in TIF files only : 
+                </p>
+
+                <!-- boutton upload multiple files  -->
+                <form method="post" id="uploadForm" action="{{ url_for('predict') }}" enctype="multipart/form-data">
+                    <input type="file" name="image[]" id="image" accept=".tif" multiple>
+                    <br><br>
+                    <button class="btnPredict" value="Predict" onclick="cliquer_lien()">Predict</button>
+		    <br>
+		</form>
+                    <!--<label>
+   			 <input type="checkbox" name="download" value="1">
+   			 Cocher pour télécharger le fichier résultat.csv après la prédiction
+ 		    </label>
+                    {% if prediction_result %}
+      		    <p>La prédiction a été effectuée avec succès! <a href="{{ url_for('download') }}">Cliquez ici pour télécharger le résultat</a></p>
+      		    {% endif %}-->
+            </section>
+
+            <section>
+                This algorithm will send in result a csv file in which each file id will be tagged with a 0 or a 1. </br>
+                0 : No presence of cancerous cells detected </br>
+                1 : Presence of cancerous cells detected
+            </section>
+        </div>
+
+    <!------------- CONTACT --------------->
+          <div id="contact_container" class="container">
+            <div onclick="closecontact()"><i class="fas fa-angle-down"></i> X</div>
+            <h1>information.</h1>
+            <section>
+                <p> This website was created for educational purpose in a first time.</p>
+                <p> For our last year of engineering we took part of the 2O23 Master Projects of the engineering school: ESME Sudria. </br> 
+                    A challenge allowing stundents to team up towards innovation.</br>
+                    The aim of our project was to make AI available tward as many people as possible. </br>
+                    The cleaning and processing of the data as well as the training of the model was done formerly so people can exploit this algorithm for multiple files. </br>
+                    This challenge was accomplished in 3 months instead of 6 months, because of our apprentice status.  
+                </p>
+                <h3> You can find our Linkedin : </h3>
+
+                <div class="grid-container">
+                    <div class="container-logo-linkedin">
+                        <img id="linkedin" src="/static/img/linkedin.png"> 
+                    </div>
+
+                    <div class="container-text-linkedin"> 
+                        <a href="https://fr.linkedin.com/in/alicia-desrentes"> Alicia Desrentes </a> </br>
+                        <a href="https://fr.linkedin.com/in/farah-dourouni"> Farah Dourouni </a> </br>
+                        <a href="https://fr.linkedin.com/in/nelty-lay"> Nelty Lay  </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    <!------------- FOOTER --------------->
+        <div id="footer">
+            <!-- <img id= "logo-esme" src="esme.png"> copyright <br> -->
+            <a href="https://lydia-app.com/pots?id=34472-celldetector">donate to maintain this website </a>
+            
+        </div>
+    <script src="/static/js/index.js" type="text/javascript"></script>
+    <script src="/static/js/particles.js"></script>
+    <script src="/static/js/app.js"></script>
+
+    <!--Verification du format du fichier-->
+    <script>
+      window.onload = function () {
+        var form = document.getElementById('uploadForm'),
+        imageInput = document.getElementById('image');
+
+        form.onsubmit = function () {
+          var isValid = /\.tif$/i.test(imageInput.value);
+            if (isValid) {
+              return isValid;
+            }
+            alert('seulement les fichiers TIF sont autorisés');
+          }
+        }
+    </script>
+</body>
+</html>
